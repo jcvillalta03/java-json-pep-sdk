@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,19 +23,32 @@ public class XPathExpression {
         example = "urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
         required = true
     )
-    @JsonProperty("XPathCategory")
+    @Getter(onMethod_ = {@JsonProperty("XPathCategory")})
     String xPathCategory;
 
     @ApiModelProperty(
         example = "[{\"Namespace\": \"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\"}]"
     )
-    @JsonProperty("Namespaces")
-    List<NamespaceDeclaration> namespaces;
+    @Getter(onMethod_ = {@JsonProperty("Namespaces")})
+    final List<NamespaceDeclaration> namespaceDeclarations = new ArrayList<>();
 
     @ApiModelProperty(
         example = "md:record/md:patient/md:patientDoB",
         required = true
     )
-    @JsonProperty("XPath")
+    @Getter(onMethod_ = {@JsonProperty("XPath")})
     String xPath;
+
+    public XPathExpression(String xPathCategory, String xPath) {
+        this.xPathCategory = xPathCategory;
+        this.xPath = xPath;
+    }
+
+    public boolean addNamespaceDeclaration(String namespace) {
+        return namespaceDeclarations.add(new NamespaceDeclaration(namespace));
+    }
+
+    public boolean addNamespaceDeclaration(String namespace, String prefix) {
+        return namespaceDeclarations.add(new NamespaceDeclaration(namespace, prefix));
+    }
 }

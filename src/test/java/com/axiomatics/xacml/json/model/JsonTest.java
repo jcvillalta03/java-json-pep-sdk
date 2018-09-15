@@ -22,75 +22,33 @@ public class JsonTest {
     public void before() {
         mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
     }
 
-    /*
-        {
-            "Request": {
-                "AccessSubject": {
-                    "Attribute": [
-                        {
-                            "AttributeId": "subject-id",
-                            "Value": "Andreas"
-                        },
-                        {
-                            "AttributeId": "location",
-                            "Value": "Gamla Stan"
-                        }
-                    ]
-                },
-                "Action": {
-                    "Attribute": [
-                        {
-                            "AttributeId": "action-id",
-                            "DataType": "anyURI",
-                            "Value": "http://example.com/buy"
-                        }
-                    ]
-                },
-                "Resource": {
-                    "Attribute": [
-                        {
-                            "AttributeId": "book-title",
-                            "Value": "Learn German in 90 days"
-                        },
-                        {
-                            "AttributeId": "currency",
-                            "Value": "SEK"
-                        },
-                        {
-                            "AttributeId": "price",
-                            "Value": 123.34
-                        }
-                    ]
-                }
-            }
-        }
-     */
     @Test
     public void testRequestJsonFormat() throws JsonProcessingException {
-        AuthorizeRequest request = new AuthorizeRequest();
+        Request request = new Request();
 
-        AttributeCollection accessSubjectAttributes = new AttributeCollection();
         List<String> nickNames = new ArrayList<>();
         nickNames.add("Andy");
         nickNames.add("Dre");
 
-        accessSubjectAttributes.add(new Attribute("subject-id", "Andreas"));
-        accessSubjectAttributes.add(new Attribute("location", "Gamla Stan"));
-        accessSubjectAttributes.add(new Attribute("nicknames", nickNames));
+        Category accessSubjectCategory = new Category();
+        accessSubjectCategory.addAttribute("subject-id", "Andreas");
+        accessSubjectCategory.addAttribute("location", "Gamla Stan");
+        accessSubjectCategory.addAttribute("nicknames", nickNames);
 
-        AttributeCollection actionAttributes = new AttributeCollection();
-        actionAttributes.add(new Attribute("action-id", "http://example.com/buy", "anyURI"));
+        Category actionCategory = new Category();
+        actionCategory.addAttribute("action-id", "http://example.com/buy", "anyURI");
 
-        AttributeCollection resourceAttributes = new AttributeCollection();
-        resourceAttributes.add(new Attribute("book-title", "Learn German in 90 days"));
-        resourceAttributes.add(new Attribute("currency", "SEK"));
-        resourceAttributes.add(new Attribute("price", 123.34));
+        Category resourceCategory = new Category();
+        resourceCategory.addAttribute("book-title", "Learn German in 90 days");
+        resourceCategory.addAttribute("currency", "SEK");
+        resourceCategory.addAttribute("price", 123.34);
 
-        request.accessSubjectAttributes = accessSubjectAttributes;
-        request.actionAttributes = actionAttributes;
-        request.resourceAttributes = resourceAttributes;
+        request.addAccessSubjectCategory(accessSubjectCategory);
+        request.addActionCategory(actionCategory);
+        request.addResourceCategory(resourceCategory);
 
         String jsonString = mapper.writeValueAsString(request);
         System.out.println(jsonString);
@@ -114,11 +72,54 @@ public class JsonTest {
      */
     @Test
     public void testAttributeJsonFormat() throws JsonProcessingException {
-        Attribute attribute = new Attribute("document-id", 123, "integer");
+        Attribute attribute = new Attribute("document-id", 123);
 
         String jsonString = mapper.writeValueAsString(attribute);
         System.out.println(jsonString);
 
         assertTrue(true);
     }
+
+    /**
+     * From {@link http://docs.oasis-open.org/xacml/xacml-json-http/v1.0/xacml-json-http-v1.0.html} - Table 4
+     * <p>
+     * Tests that Attribute json matches the following:
+     * <p>
+     * {
+     * "Attribute":{
+     * "AttributeId":"urn:oasis:names:tc:xacml:3.0:content-selector",
+     * "DataType":"xpathExpression",
+     * "Value":{
+     * "XPathCategory":"urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
+     * "Namespaces":[{
+     * "Namespace": "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+     * },{
+     * "Prefix":"md",
+     * "Namespace":"urn:example:med:schemas:record"
+     * }],
+     * "XPath":"md:record/md:patient/md:patientDoB"
+     * }
+     * }
+     * }
+     *
+     * @throws JsonProcessingException
+     */
+    @Test
+    public void testAttributeJsonFormat_WithXpathExpression() throws JsonProcessingException {
+
+        List<NamespaceDeclaration> namespaceDeclarations = new ArrayList<>();
+        namespaceDeclarations.add(new NamespaceDeclaration("urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"));
+        namespaceDeclarations.add(new NamespaceDeclaration("md", "urn:example:med:schemas:record"));
+        XPathExpression xPathExpression = new XPathExpression("urn:oasis:names:tc:xacml:3.0:attribute-category:resource", "md:record/md:patient/md:patientDoB");
+        xPathExpression.addNamespaceDeclaration("urn:oasis:names:tc:xacml:3.0:core:schema:wd-17");
+        xPathExpression.addNamespaceDeclaration("urn:example:med:schemas:record", "md");
+        Attribute attribute = new Attribute("urn:oasis:names:tc:xacml:3.0:content-selector", xPathExpression, "xpathExpression");
+
+        String jsonString = mapper.writeValueAsString(attribute);
+        System.out.println(jsonString);
+
+        assertTrue(true);
+    }
+
+
 }

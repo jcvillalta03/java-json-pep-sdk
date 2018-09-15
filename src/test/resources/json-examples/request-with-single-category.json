@@ -1,0 +1,37 @@
+{
+  "Request": {
+    "Category": [
+      {
+        "CategoryId": "custom-category",
+        "Attribute": [
+          …
+        ]
+      },
+      {
+        "CategoryId": "another-custom-cat",
+        "Attribute": [
+          …
+        ]
+      }
+    ],
+    "AccessSubject": [
+      {
+        "Attribute": [
+          …
+        ]
+      }
+    ],
+    "Action": [
+      {
+        "Attribute": [
+          …
+        ]
+      },
+      {
+        "Attribute": [
+          …
+        ]
+      }
+    ]
+  }
+}

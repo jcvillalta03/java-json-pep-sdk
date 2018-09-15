@@ -1,26 +1,30 @@
 package com.axiomatics.xacml.json.model;
 
-import lombok.Getter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Julio Cesar Villalta III <jvillalta@nvisia.com>
  */
-@Getter
-@ToString
 public enum PDPDecision {
 
-    PERMIT(0, "Permit"),
-    DENY(1, "Deny"),
-    INDETERMINATE(2, "Indeterminate"),
-    NOT_APPLICABLE(3, "NotApplicable");
+    @JsonProperty("Permit")
+    PERMIT(0),
+    @JsonProperty("Deny")
+    DENY(1),
+    @JsonProperty("Indeterminate")
+    INDETERMINATE(2),
+    @JsonProperty("NotApplicable")
+    NOT_APPLICABLE(3);
 
     int ordinal;
     String decision;
 
-    PDPDecision(int ordinal, String decision) {
+    PDPDecision(int ordinal) {
         this.ordinal = ordinal;
-        this.decision = decision;
+    }
+
+    public int getOrdinal() {
+        return ordinal;
     }
 
 }
