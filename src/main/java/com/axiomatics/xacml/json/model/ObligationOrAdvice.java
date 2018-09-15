@@ -1,6 +1,7 @@
 package com.axiomatics.xacml.json.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import lombok.Getter;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * @author Julio Cesar Villalta III <jvillalta@nvisia.com>
  */
+@Data
 public class ObligationOrAdvice {
 
     @Getter(onMethod_ = {@JsonProperty("Id")})

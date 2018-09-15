@@ -1,45 +1,58 @@
 package com.axiomatics.xacml.json.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.EqualsAndHashCode;
+import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The Request Body for PDP Authorize Requests
+ *
  * @author Julio Cesar Villalta III <jvillalta@nvisia.com>
  */
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
-@JsonRootName(value = "Request")
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @ApiModel("The Request Body for PDP Authorize Requests")
 public class Request {
 
-    @ApiModelProperty(example = "false", notes = "Optional, default value is false")
+    /**
+     * This attribute is used to request that the PDP return a list of all fully applicable policies and policy sets which were used in the decision
+     * as a part of the decision response.
+     *
+     * Defaults to false if not specified
+     */
+    @ApiModelProperty(example = "false", notes = "This attribute is used to request that the PDP return a list of all fully applicable policies and " +
+        "policy sets which were used in the decision as a part of the decision response. Defaults to false if not specified")
     @Getter(onMethod_ = {@JsonProperty("ReturnPolicyIdList")})
-    Boolean returnPolicyIdList;
+    boolean returnPolicyIdList = false;
 
-    @ApiModelProperty(example = "false", notes = "Optional, default value is false")
+    /**
+     * This attribute is used to request that the PDP combines multiple decisions into a single decision.
+     *
+     * Defaults to false if not specified
+     */
+    @ApiModelProperty(example = "false", notes = "This attribute is used to request that the PDP combines multiple decisions into a single decision." +
+        "Defaults to false if not specified")
     @Getter(onMethod_ = {@JsonProperty("CombinedDecision")})
-    Boolean combinedDecision;
+    boolean combinedDecision = false;
 
-    @ApiModelProperty(notes = "Mandatory if the XACML request contains XPath expressions; otherwise, optional.")
+    /**
+     * The xpath version
+     */
+    @ApiModelProperty(notes = "The xpath version. Mandatory if the XACML request contains XPath expressions; otherwise, optional.")
     @Getter(onMethod_ = {@JsonProperty("XPathVersion")})
     String xPathVersion;
 
     @ApiModelProperty(notes = "Optional, but see section 4.2.2.2.")
     @Getter(onMethod_ = {@JsonProperty("Category")})
-    List<Category> categories = new ArrayList<>();
+    List<Category> customCategories = new ArrayList<>();
 
     @ApiModelProperty(value = "Collection of resource-related attributes", notes = "Optional, but see section 4.2.2.2.")
     @Getter(onMethod_ = {@JsonProperty("Resource")})
@@ -59,23 +72,30 @@ public class Request {
 
     @ApiModelProperty(notes = "Optional, but see section 4.2.2.2.")
     @Getter(onMethod_ = {@JsonProperty("RecipientSubject")})
-    List<Category> RecipientSubject = new ArrayList<>();
+    List<Category> recipientSubjectCategories = new ArrayList<>();
 
     @ApiModelProperty(notes = "Optional, but see section 4.2.2.2.")
     @Getter(onMethod_ = {@JsonProperty("IntermediarySubject")})
-    List<Category> IntermediarySubject = new ArrayList<>();
+    List<Category> intermediarySubjectCategories = new ArrayList<>();
 
     @ApiModelProperty(notes = "Optional, but see section 4.2.2.2.")
     @Getter(onMethod_ = {@JsonProperty("CodeBase")})
-    List<Category> CodeBase = new ArrayList<>();
+    List<Category> codeBaseCategories = new ArrayList<>();
 
     @ApiModelProperty(notes = "Optional, but see section 4.2.2.2.")
     @Getter(onMethod_ = {@JsonProperty("RequestingMachine")})
-    List<Category> RequestingMachine = new ArrayList<>();
+    List<Category> requestingMachineCategories = new ArrayList<>();
 
-    @ApiModelProperty(notes = "Optional")
+    /**
+     * Lists multiple request contexts by references to the Category members. Optional
+     */
+    @ApiModelProperty(notes = "Lists multiple request contexts by references to the Category members. Optional")
     @Getter(onMethod_ = {@JsonProperty("MultiRequests")})
-    com.axiomatics.xacml.json.model.MultiRequests MultiRequests;
+    MultiRequests multiRequests;
+
+    public boolean addCustomCategory(Category category) {
+        return customCategories.add(category);
+    }
 
     public boolean addResourceCategory(Category category) {
         return resourceCategories.add(category);
@@ -91,5 +111,21 @@ public class Request {
 
     public boolean addAccessSubjectCategory(Category category) {
         return accessSubjectCategories.add(category);
+    }
+
+    public boolean addRecipientSubjectCategories(Category category) {
+        return recipientSubjectCategories.add(category);
+    }
+
+    public boolean addIntermediarySubjectCategories(Category category) {
+        return intermediarySubjectCategories.add(category);
+    }
+
+    public boolean addCodeBaseCategories(Category category) {
+        return codeBaseCategories.add(category);
+    }
+
+    public boolean addRequestingMachineCategories(Category category) {
+        return requestingMachineCategories.add(category);
     }
 }

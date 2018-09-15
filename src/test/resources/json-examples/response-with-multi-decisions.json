@@ -41,30 +41,30 @@
           "StatusCode": {
             "Value": "urn:oasis:names:tc:xacml:1.0:status:ok"
           }
+        }
+      },
+      "Category": [
+        {
+          "CategoryId": "urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
+          "Attribute": [
+            {
+              "AttributeId": "com.acme.record.recordId",
+              "Value": "126",
+              "DataType": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ]
         },
-        "Category": [
-          {
-            "CategoryId": "urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
-            "Attribute": [
-              {
-                "AttributeId": "com.acme.record.recordId",
-                "Value": "126",
-                "DataType": "http://www.w3.org/2001/XMLSchema#string"
-              }
-            ]
-          },
-          {
-            "CategoryId": "urn:oasis:names:tc:xacml:3.0:attribute-category:action",
-            "Attribute": [
-              {
-                "AttributeId": "com.acme.action.actionId",
-                "Value": "edit",
-                "DataType": "http://www.w3.org/2001/XMLSchema#string"
-              }
-            ]
-          }
-        ]
-      }
+        {
+          "CategoryId": "urn:oasis:names:tc:xacml:3.0:attribute-category:action",
+          "Attribute": [
+            {
+              "AttributeId": "com.acme.action.actionId",
+              "Value": "edit",
+              "DataType": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

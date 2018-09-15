@@ -2,18 +2,13 @@ package com.axiomatics.xacml.json.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.EqualsAndHashCode;
+import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * @author Julio Cesar Villalta III <jvillalta@nvisia.com>
  */
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 public class NamespaceDeclaration {
 
     @ApiModelProperty(

@@ -1,28 +1,31 @@
 package com.axiomatics.xacml.json.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.EqualsAndHashCode;
+import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
+ * The central abstraction of the request context.  It contains attribute metadata and one or more attribute values.
+ *
  * @author Julio Cesar Villalta III <jvillalta@nvisia.com>
  */
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
-@ApiModel("A XACML attribute")
+@Data
+@ApiModel("The central abstraction of the request context.  It contains attribute meta-data and one or more attribute values")
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Attribute {
 
     public Attribute(String attributeId, Object value) {
         this.attributeId = attributeId;
         this.value = value;
+    }
+
+    public Attribute(String attributeId, Object value, boolean includeInResult) {
+        this.attributeId = attributeId;
+        this.value = value;
+        this.includeInResult = includeInResult;
     }
 
     public Attribute(String attributeId, Object value, String dataType) {
@@ -31,11 +34,16 @@ public class Attribute {
         this.dataType = dataType;
     }
 
+    public Attribute(String attributeId, Object value, boolean includeInResult, String dataType) {
+        this(attributeId, value, includeInResult);
+        this.dataType = dataType;
+    }
+
     /**
-     * The unique identifier of the {@link Attribute)
+     * The {@link Attribute} identifier
      */
     @ApiModelProperty(
-        value = "A string containing a XACML attribute URI",
+        value = "The Attribute identifier",
         example = "urn:oasis:names:tc:xacml:2.0:subject:role",
         required = true
     )
@@ -43,11 +51,13 @@ public class Attribute {
     String attributeId;
 
     /**
-     * The value of the {@link Attribute)
+     * One or more {@link Attribute} values.
+     * <p>
+     * Can be an array of elements of the same type; either string, boolean, number (which maps to either a XACML integer or double as defined in
+     * Supported Data Types) or object.
      */
     @ApiModelProperty(
-        value = "An array of elements of the same type; either string, boolean, number (which maps to either a XACML integer or double as defined in " +
-            "Supported Data Types) or object.",
+        value = "One or more attribute values",
         example = "acmeId-001",
         required = true
     )
@@ -72,17 +82,18 @@ public class Attribute {
     String dataType;
 
     /**
-     * The issuer of the {@link Attribute)
+     * The {@link Attribute} issuer
      */
-    @ApiModelProperty()
+    @ApiModelProperty(value = "The Attribute issuer")
     @Getter(onMethod_ = {@JsonProperty("Issuer")})
     String issuer;
 
     /**
-     *
+     * Whether to include this {@link Attribute} in the result.
+     * This is useful to correlate requests with their responses in case of multiple requests.
      */
-    @ApiModelProperty()
+    @ApiModelProperty(value = "Whether to include this attribute in the result")
     @Getter(onMethod_ = {@JsonProperty("IncludeInResult")})
-    Boolean includeInResult;
+    boolean includeInResult = false;
 
 }
