@@ -13,7 +13,7 @@ import lombok.Data;
  * contained in a protocol wrapper that can convey status information, then the common status information MAY be placed in the protocol wrapper and
  * this {@link Status} element MAY be omitted from all {@link Result} elements.
  */
-@ApiModel("The status of the authorization decision result")
+@ApiModel(description = "The status of the authorization decision result")
 @Data
 public class Status {
 

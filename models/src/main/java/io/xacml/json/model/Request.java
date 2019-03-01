@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-@ApiModel("The Request Body for PDP XACML Authorize Requests")
+@ApiModel(description = "The Request Body for PDP XACML Authorize Requests")
 public class Request {
 
     /**

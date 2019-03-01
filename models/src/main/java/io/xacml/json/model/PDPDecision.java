@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModel;
 /**
  * The result of policy evaluation
  */
-@ApiModel("The result of policy evaluation")
+@ApiModel(description = "The result of policy evaluation")
 public enum PDPDecision {
 
     /**

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Values of the XACML xPathExpression data-type are represented as JSON objects
  */
-@ApiModel("Values of the XACML xPathExpression data-type are represented as JSON objects")
+@ApiModel(description = "Values of the XACML xPathExpression data-type are represented as JSON objects")
 @Data
 public class XPathExpression {
 

@@ -10,7 +10,7 @@ import lombok.Data;
  * The central abstraction of the request context.  It contains attribute metadata and one or more attribute values.
  */
 @Data
-@ApiModel("The central abstraction of the request context.  It contains attribute meta-data and one or more attribute values")
+@ApiModel(description = "The central abstraction of the request context.  It contains attribute meta-data and one or more attribute values")
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Attribute {
 

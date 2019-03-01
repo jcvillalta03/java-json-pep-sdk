@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * Conveys information about attributes required for policy evaluation that were missing from the request context.
  */
-@ApiModel("Conveys information about attributes required for policy evaluation that were missing from the request context")
+@ApiModel(description = "Conveys information about attributes required for policy evaluation that were missing from the request context")
 @Data
 public class MissingAttributeDetail {
 

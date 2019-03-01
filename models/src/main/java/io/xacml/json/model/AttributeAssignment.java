@@ -11,7 +11,7 @@ import lombok.Data;
  * Its attribute Id and value shall be evaluated into the corresponding attribute value. The value specified SHALL be understood by the PEP, but it
  * is not further specified by XACML
  */
-@ApiModel("Used for including arguments in obligations and advice. Its attribute Id and value shall be evaluated into the corresponding attribute " +
+@ApiModel(description = "Used for including arguments in obligations and advice. Its attribute Id and value shall be evaluated into the corresponding attribute " +
     "value. The value specified SHALL be understood by the PEP, but it is not further specified by XACML")
 @Data
 public class AttributeAssignment {

@@ -11,7 +11,7 @@ import java.util.List;
  * Encapsulates the authorization decision produced by the PDP
  */
 @Data
-@ApiModel("The Response Body Wrapper")
+@ApiModel(description = "The Response Body Wrapper")
 public class Response {
 
     /**

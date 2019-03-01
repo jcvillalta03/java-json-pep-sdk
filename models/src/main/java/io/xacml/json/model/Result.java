@@ -15,7 +15,7 @@ import java.util.List;
  * It MAY include a set of advice with supplemental information which MAY be safely ignored by the PEP.
  */
 @Data
-@ApiModel("An authorization decision result")
+@ApiModel(description = "An authorization decision result")
 public class Result {
 
     /**

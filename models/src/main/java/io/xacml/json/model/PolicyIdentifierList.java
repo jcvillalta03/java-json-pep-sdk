@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Container of lists of policy and policy set {@link IdReference}s which have been applicable to a request
  */
-@ApiModel("Container of lists of policy and policy set IdReferences which have been applicable to a request")
+@ApiModel(description = "Container of lists of policy and policy set IdReferences which have been applicable to a request")
 @Data
 public class PolicyIdentifierList {
 

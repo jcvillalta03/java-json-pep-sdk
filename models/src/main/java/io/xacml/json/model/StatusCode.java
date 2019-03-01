@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * Contains a major status code value and an optional sequence of minor status code
  */
-@ApiModel("Contains a major status code value and an optional sequence of minor status code")
+@ApiModel(description = "Contains a major status code value and an optional sequence of minor status code")
 @Data
 public class StatusCode {
 

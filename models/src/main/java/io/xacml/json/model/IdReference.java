@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * Holder of the identifier and version of a policy or policy set which was applicable to the request
  */
-@ApiModel("Holder of the identifier and version of a policy or policy set which was applicable to the request")
+@ApiModel(description = "Holder of the identifier and version of a policy or policy set which was applicable to the request")
 @Data
 public class IdReference {
 

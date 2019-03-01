@@ -13,7 +13,7 @@ import java.util.List;
  * Specifies attributes of a Category (like subject, resource, action, environment or another category) by listing a sequence of {@link Attribute}s
  */
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-@ApiModel("Specifies attributes of a Category (like subject, resource, action, environment or another category) by listing a sequence of Attributes")
+@ApiModel(description = "Specifies attributes of a Category (like subject, resource, action, environment or another category) by listing a sequence of Attributes")
 @Data
 public class Category {
 
